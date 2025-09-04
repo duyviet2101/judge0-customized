@@ -1,0 +1,7 @@
+#!/bin/bash
+
+
+echo "Precompiling Julia packages..."
+$JULIA_EXE -e "import FileIO; import ImageIO; import PNGFiles; import Measures; import Plots; import UUIDs"
+
+echo "Julia pacakge precompilations finished!"

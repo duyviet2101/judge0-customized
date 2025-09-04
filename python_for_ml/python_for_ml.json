@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Python (3.12.9 ML)",
+    "is_archived": false,
+    "source_file": "script.py",
+    "compile_cmd": "",
+    "run_cmd": "/usr/local/miniconda/bin/python script.py"
+  }
+]

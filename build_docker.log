@@ -1,0 +1,127 @@
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.93kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/judge0/judge0:1.13.1
+#2 DONE 2.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [ 1/35] FROM docker.io/judge0/judge0:1.13.1@sha256:6b5d6a66aa19a8e878a52ea3c6a560afc1086734d96e2885b561fd5c6018f082
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 8.88MB 0.0s done
+#5 DONE 0.0s
+
+#6 [14/35] RUN sudo /usr/local/python-3.8.1/bin/pip3.8 install --upgrade pip &&     sudo /usr/local/python-3.8.1/bin/pip3.8 install numpy pandas scipy scikit-learn==1.3.2 matplotlib seaborn
+#6 CACHED
+
+#7 [33/35] RUN sudo touch /api/db/languages/edgar_langs/edg_lang_id_start.rb &&     sudo touch /api/db/temp &&     sudo chown -R judge0: /api
+#7 CACHED
+
+#8 [12/35] RUN sudo chown -R judge0:judge0 /usr/local/lib/.julia
+#8 CACHED
+
+#9 [24/35] RUN mkdir -p /tmp/miniconda
+#9 CACHED
+
+#10 [15/35] RUN mkdir -p /tmp/java && mkdir -p /usr/lib/jvm
+#10 CACHED
+
+#11 [ 9/35] RUN ls /usr/local/julia-1.10.2  # Provjera da postoji
+#11 CACHED
+
+#12 [26/35] RUN bash /tmp/miniconda/miniconda.sh -b -p /usr/local/miniconda
+#12 CACHED
+
+#13 [31/35] RUN python --version && pip --version
+#13 CACHED
+
+#14 [19/35] RUN sudo tar xfvz /tmp/java/openjdk-21.0.2_linux-x64_bin.tar.gz --directory /usr/lib/jvm
+#14 CACHED
+
+#15 [29/35] RUN conda update -n base -c defaults conda &&     conda install python=3.12.9 numpy pandas scipy scikit-learn matplotlib seaborn
+#15 CACHED
+
+#16 [10/35] RUN rm -rf /tmp/julia
+#16 CACHED
+
+#17 [25/35] RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py312_24.1.2-0-Linux-x86_64.sh -O /tmp/miniconda/miniconda.sh
+#17 CACHED
+
+#18 [11/35] RUN sudo mkdir -p /usr/local/lib/.julia
+#18 CACHED
+
+#19 [13/35] RUN /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.add("FileIO")' &&         /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.add("ImageIO")' &&         /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.add("PNGFiles")' &&         /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.add("Measures")' &&         /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.add("Plots")' &&         /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.add("UUIDs")' &&         /usr/local/julia-1.10.2/bin/julia -e 'import Pkg; Pkg.instantiate()'
+#19 CACHED
+
+#20 [ 5/35] RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.2-linux-x86_64.tar.gz -P /tmp/julia
+#20 CACHED
+
+#21 [ 8/35] RUN sudo tar xfvz /tmp/julia/julia-1.10.2-linux-x86_64.tar.gz --directory /usr/local
+#21 CACHED
+
+#22 [32/35] COPY lang_imports/edgar_langs/ /api/db/languages/edgar_langs/
+#22 CACHED
+
+#23 [21/35] RUN rm /tmp/java/*
+#23 CACHED
+
+#24 [ 2/35] COPY ./scripts/prepare_workers /api/scripts/prepare_workers
+#24 CACHED
+
+#25 [27/35] RUN rm -rf /tmp/miniconda
+#25 CACHED
+
+#26 [ 6/35] RUN wget https://julialang-s3.julialang.org/bin/checksums/julia-1.10.2.sha256 -P /tmp/julia
+#26 CACHED
+
+#27 [23/35] RUN sudo /usr/local/python-3.8.1/bin/pip3.8 install --upgrade pip &&     sudo /usr/local/python-3.8.1/bin/pip3.8 install -I PuLP==2.5.1 scipy pyomo
+#27 CACHED
+
+#28 [30/35] RUN conda clean -afy
+#28 CACHED
+
+#29 [34/35] RUN echo @start = $(cat /api/db/languages/*.rb | perl -n -e '/\s*id:\s*(\d+)/ && print "$1\n"' | sort -n | tail -1) > /api/db/languages/edgar_langs/edg_lang_id_start.rb &&     echo "require_relative 'languages/imp_edgar_langs'" | cat - /api/db/seeds.rb > /api/db/temp && mv /api/db/temp /api/db/seeds.rb
+#29 CACHED
+
+#30 [ 3/35] COPY ./scripts/workers /api/scripts/workers
+#30 CACHED
+
+#31 [28/35] RUN chown -R judge0:judge0 /usr/local/miniconda
+#31 CACHED
+
+#32 [16/35] RUN wget https://download.java.net/java/GA/jdk21.0.2/f2283984656d49d69e91c558476027ac/13/GPL/openjdk-21.0.2_linux-x64_bin.tar.gz  -P /tmp/java
+#32 CACHED
+
+#33 [ 4/35] RUN mkdir -p /tmp/julia
+#33 CACHED
+
+#34 [18/35] RUN echo "$(sha256sum /tmp/java/openjdk-21.0.2_linux-x64_bin.tar.gz)" | xargs printf '%s %s' "$1" "$2" | sha256sum --check
+#34 CACHED
+
+#35 [22/35] COPY oop/edgar-oop.jar /usr/lib/jvm/edgar-libs/edgar.jar
+#35 CACHED
+
+#36 [20/35] RUN ls /usr/lib/jvm/jdk-21.0.2 # To confirm that the directory has the jdk-21.0.2 file!
+#36 CACHED
+
+#37 [17/35] RUN wget https://download.java.net/java/GA/jdk21.0.2/f2283984656d49d69e91c558476027ac/13/GPL/openjdk-21.0.2_linux-x64_bin.tar.gz.sha256 -P /tmp/java
+#37 CACHED
+
+#38 [ 7/35] RUN echo "$(sha256sum /tmp/julia/julia-1.10.2-linux-x86_64.tar.gz)" | xargs printf '%s %s' "$1" "$2" | sha256sum --check
+#38 CACHED
+
+#39 [35/35] COPY lang_imports/imp_edgar_langs.rb /api/db/languages/imp_edgar_langs.rb
+#39 CACHED
+
+#40 exporting to image
+#40 exporting layers done
+#40 writing image sha256:51922d8d04695c57c73c45c49bf15f1a4682165a454a389f0c100a5f0b611484 done
+#40 naming to registry.gitlab.com/neu_oj/judge0:1.13.1 done
+#40 DONE 0.0s

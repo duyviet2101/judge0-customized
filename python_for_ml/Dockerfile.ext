@@ -1,0 +1,21 @@
+# Install Miniconda (Python 3.12.x)
+
+USER root
+RUN mkdir -p /tmp/miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-py312_24.1.2-0-Linux-x86_64.sh -O /tmp/miniconda/miniconda.sh
+RUN bash /tmp/miniconda/miniconda.sh -b -p /usr/local/miniconda
+RUN rm -rf /tmp/miniconda
+RUN chown -R judge0:judge0 /usr/local/miniconda
+
+USER judge0
+
+ENV PATH="/usr/local/miniconda/bin:$PATH"
+
+# Update conda and install packages
+RUN conda update -n base -c defaults conda && \
+    conda install python=3.12.9 numpy pandas scipy scikit-learn matplotlib seaborn openpyxl ipython tabulate
+
+RUN conda clean -afy
+
+# Verify installation
+RUN python --version && pip --version

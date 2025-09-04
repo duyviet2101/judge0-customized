@@ -1,0 +1,4 @@
+RUN sudo /usr/local/python-3.8.1/bin/pip3.8 install --upgrade pip && \
+    sudo /usr/local/python-3.8.1/bin/pip3.8 install -I PuLP==2.5.1 scipy pyomo
+
+
