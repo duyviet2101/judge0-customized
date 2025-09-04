@@ -1,3 +1,7 @@
+```
+sudo ./build_image.sh -g neu_oj
+```
+
 # Judge0
 > Edgar's extended version of Judge0.
 
