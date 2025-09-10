@@ -13,7 +13,7 @@ ENV PATH="/usr/local/miniconda/bin:$PATH"
 
 # Update conda and install packages
 RUN conda update -n base -c defaults conda && \
-    conda install python=3.12.9 numpy pandas scipy scikit-learn matplotlib seaborn openpyxl ipython tabulate lxml
+    conda install python=3.12.9 numpy pandas scipy scikit-learn matplotlib seaborn openpyxl ipython tabulate lxml beautifulsoup4
 
 RUN conda clean -afy
 
